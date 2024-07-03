@@ -1,11 +1,15 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
 import prisma from "../lib/prisma";
+import { redirect } from "next/navigation";
 
 export const getAllTransactions = async () => {
   return await prisma.expense.findMany();
 };
 
 export const addTransaction = async (title: string, amount: number) => {
-  return await prisma.expense.create({
+  await prisma.expense.create({
     data: {
       title,
       amount,
