@@ -1,19 +1,26 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import prisma from "../lib/prisma";
-import { redirect } from "next/navigation";
 
 export const getAllTransactions = async () => {
   return await prisma.expense.findMany();
 };
 
-export const addTransaction = async (title: string, amount: number) => {
+export const addTransaction = async (
+  title: string,
+  amount: number,
+  category: string
+) => {
+  const type = category.split("-")[0] === "income" ? "Income" : "Expense";
+  let formattedAmount =
+    category.split("-")[0] === "income" ? amount : amount * -1;
   await prisma.expense.create({
     data: {
       title,
-      amount,
+      amount: formattedAmount,
       userId: 1,
+      category,
+      type,
     },
   });
 };

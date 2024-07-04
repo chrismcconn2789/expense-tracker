@@ -12,10 +12,12 @@ export default function Header() {
   return (
     <div className="w-full flex flex-col gap-8">
       <div className="flex justify-between">
-        <div className="flex gap-4 items-center">
-          <PoundSterlingIcon className="size-10 stroke-[3px] bg-black rounded-md text-white p-2 dark:text-black dark:bg-white" />
-          <h1 className="font-bold text-2xl">Financial Analytics</h1>
-        </div>
+        <Link href={"/"}>
+          <div className="flex gap-4 items-center">
+            <PoundSterlingIcon className="size-12 stroke-[3px] bg-black rounded-md text-white p-2 dark:text-black dark:bg-white" />
+            <h1 className="font-bold text-2xl">Financial Analytics</h1>
+          </div>
+        </Link>
         <ModeToggle />
       </div>
       <hr />
@@ -28,16 +30,16 @@ export default function Header() {
                 Dashboard
               </li>
             </Link>
-            <Link href={"/create-expense"}>
-              <li className="flex gap-1 border rounded-md py-1 px-3 items-center">
-                <PlusIcon className="size-5" />
-                Create Transaction
-              </li>
-            </Link>
             <Link href={"/overview"}>
               <li className="flex gap-1 border rounded-md py-1 px-3 items-center">
                 <Table2Icon className="size-5" />
                 Overview
+              </li>
+            </Link>
+            <Link href={"/create-expense"}>
+              <li className="flex gap-1 border rounded-md py-1 px-3 items-center">
+                <PlusIcon className="size-5" />
+                Create Transaction
               </li>
             </Link>
             <Link href={"/about"}>

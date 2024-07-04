@@ -1,3 +1,4 @@
+import { addTransaction } from "@/actions/expense";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,19 +12,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { expenseCategories, incomeCategories } from "@/lib/models";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export default async function CreateExpense() {
   const createTransaction = async (formData: FormData) => {
     "use server";
     const title = formData.get("title") as string;
     const amount = formData.get("amount");
-    const category = formData.get("category");
+    const category = formData.get("category") as string;
     if (!title || !amount || !category) {
       return;
     }
-    // revalidatePath("/");
-    console.log(title, amount, category);
-    // return addTransaction(title, +amount);
+    addTransaction(title, +amount, category);
+    revalidatePath("/overview");
+    revalidatePath("/");
+    redirect("/overview");
   };
   return (
     <div className="w-full">
@@ -40,7 +45,14 @@ export default async function CreateExpense() {
             </div>
             <div>
               <Label htmlFor="amount">Amount</Label>
-              <Input type="number" id="amount" name="amount" step="0.01" />
+              <Input
+                type="number"
+                id="amount"
+                name="amount"
+                step="0.01"
+                min="0"
+                max="1000000"
+              />
             </div>
             <div>
               <Label htmlFor="category">Category</Label>
@@ -51,24 +63,21 @@ export default async function CreateExpense() {
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Income</SelectLabel>
-                    <SelectItem value="wage">Wage</SelectItem>
-                    <SelectItem value="savings">
-                      Savings & Investments
-                    </SelectItem>
-                    <SelectItem value="other">Other Income</SelectItem>
-                    <SelectLabel>Expenses</SelectLabel>
-                    <SelectItem value="housing">Housing</SelectItem>
-                    <SelectItem value="transportation">
-                      Transportation
-                    </SelectItem>
-                    <SelectItem value="food">Food</SelectItem>
-                    <SelectItem value="utilities">Utilities</SelectItem>
-                    <SelectItem value="clothing">Clothing</SelectItem>
-                    <SelectItem value="healthcare">Healthcare</SelectItem>
-                    <SelectItem value="insurance">Insurance</SelectItem>
-                    <SelectItem value="personal">Personal</SelectItem>
-                    <SelectItem value="entertainment">Entertainment</SelectItem>
-                    <SelectItem value="entertainment">Misc</SelectItem>
+                    {incomeCategories.map((category) => {
+                      return (
+                        <SelectItem value={category.value}>
+                          {category.name}
+                        </SelectItem>
+                      );
+                    })}
+                    <SelectLabel>Expense</SelectLabel>
+                    {expenseCategories.map((category) => {
+                      return (
+                        <SelectItem value={category.value}>
+                          {category.name}
+                        </SelectItem>
+                      );
+                    })}
                   </SelectGroup>
                 </SelectContent>
               </Select>

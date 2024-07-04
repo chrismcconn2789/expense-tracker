@@ -12,6 +12,13 @@ export default async function Home() {
   const total = transactions
     .map((transaction) => transaction.amount)
     .reduce((sum, acc) => sum + acc, 0);
+
+  const totalIncome = transactions
+    .map((transaction) => transaction.amount)
+    .filter((amount) => amount > 0)
+    .reduce((sum, acc) => sum + acc, 0);
+
+  const totalExpense = total - totalIncome;
   return (
     <div className="w-full grid grid-cols-2 grid-rows-2 gap-4">
       <Card className="col-span-2">
@@ -26,14 +33,18 @@ export default async function Home() {
           <CardTitle>Total Income</CardTitle>
           <CardDescription>Your total income</CardDescription>
         </CardHeader>
-        <CardContent>£{total}</CardContent>
+        <CardContent className="font-semibold text-green-500">
+          £{totalIncome}
+        </CardContent>
       </Card>
       <Card className="col-span-1">
         <CardHeader>
           <CardTitle>Total Outgoings</CardTitle>
           <CardDescription>Your total outgoing</CardDescription>
         </CardHeader>
-        <CardContent>£{total}</CardContent>
+        <CardContent className="font-semibold text-red-500">
+          £{totalExpense}
+        </CardContent>
       </Card>
     </div>
   );
