@@ -1,3 +1,12 @@
+export type transactionType = {
+  id?: number;
+  title: string;
+  amount: number;
+  category: string;
+  type: string;
+  userId?: number;
+};
+
 type IncomeCategories = {
   name: string;
   value: string;

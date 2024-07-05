@@ -39,7 +39,7 @@ export default function Header() {
             <Link href={"/create-expense"}>
               <li className="flex gap-1 border rounded-md py-1 px-3 items-center">
                 <PlusIcon className="size-5" />
-                Create Transaction
+                Create
               </li>
             </Link>
             <Link href={"/about"}>

@@ -1,4 +1,5 @@
 import { getAllTransactions } from "@/actions/expense";
+import PieChartVisual from "@/components/pie-chart";
 import {
   Card,
   CardContent,
@@ -44,6 +45,18 @@ export default async function Home() {
         </CardHeader>
         <CardContent className="font-semibold text-red-500">
           £{totalExpense}
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader className="mb-0 pb-0">
+          <CardTitle>Expense Breakdown</CardTitle>
+          <CardDescription>Expense amount by cateogry</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <PieChartVisual
+            expenseTotal={totalExpense}
+            transactionData={transactions}
+          />
         </CardContent>
       </Card>
     </div>

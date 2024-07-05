@@ -1,3 +1,4 @@
+import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
@@ -22,9 +23,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           enableSystem
           disableTransitionOnChange
         >
-          <main className="flex max-w-4xl m-auto min-h-screen flex-col items-center gap-8 p-8">
+          <main className="flex flex-grow max-w-4xl m-auto min-h-screen flex-col items-center gap-8 p-8">
             <Header />
             {children}
+            <Footer />
           </main>
         </ThemeProvider>
       </body>
