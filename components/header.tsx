@@ -23,7 +23,7 @@ export default function Header() {
       <hr />
       <div>
         <nav>
-          <ul className="flex gap-2 ">
+          <ul className="flex gap-2 flex-wrap">
             <Link href={"/"}>
               <li className="flex gap-1 border rounded-md py-1 px-3 items-center">
                 <LayoutDashboardIcon className="size-5" />

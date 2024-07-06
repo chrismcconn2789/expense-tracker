@@ -1,6 +1,7 @@
 import NeonIcon from "@/components/neon";
 import { Card } from "@/components/ui/card";
 import { TriangleAlertIcon } from "lucide-react";
+import Link from "next/link";
 import { SiNextdotjs, SiPrisma, SiTailwindcss } from "react-icons/si";
 
 export default function About() {
@@ -20,30 +21,38 @@ export default function About() {
         ORM, and Neon Postgres Database
       </div>
       <div className="flex gap-4 self-center">
-        <Card className="p-3">
-          <div className="flex items-center gap-2 text-lg font-semibold">
-            <SiNextdotjs className="size-8" />
-            Next.js
-          </div>
-        </Card>
-        <Card className="p-3">
-          <div className="flex items-center gap-2 text-lg font-semibold">
-            <NeonIcon />
-            Neon
-          </div>
-        </Card>
-        <Card className="p-3">
-          <div className="flex items-center gap-2 text-lg font-semibold">
-            <SiPrisma className="size-8" />
-            Prisma
-          </div>
-        </Card>
-        <Card className="p-3">
-          <div className="flex items-center gap-2 text-lg font-semibold">
-            <SiTailwindcss className="size-8 text-[#38BDF9]" />
-            Tailwind CSS
-          </div>
-        </Card>
+        <Link href="https://nextjs.org/" target="_blank">
+          <Card className="p-3">
+            <div className="flex items-center gap-2 text-lg font-semibold">
+              <SiNextdotjs className="size-8" />
+              Next.js
+            </div>
+          </Card>
+        </Link>
+        <Link href="https://neon.tech" target="_blank">
+          <Card className="p-3">
+            <div className="flex items-center gap-2 text-lg font-semibold">
+              <NeonIcon />
+              Neon
+            </div>
+          </Card>
+        </Link>
+        <Link href="https://www.prisma.io/" target="_blank">
+          <Card className="p-3">
+            <div className="flex items-center gap-2 text-lg font-semibold">
+              <SiPrisma className="size-8" />
+              Prisma
+            </div>
+          </Card>
+        </Link>
+        <Link href="https://tailwindcss.com/" target="_blank">
+          <Card className="p-3">
+            <div className="flex items-center gap-2 text-lg font-semibold">
+              <SiTailwindcss className="size-8 text-[#38BDF9]" />
+              Tailwind CSS
+            </div>
+          </Card>
+        </Link>
       </div>
     </div>
   );

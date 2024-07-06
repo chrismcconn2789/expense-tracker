@@ -1,5 +1,6 @@
 import { getAllTransactions } from "@/actions/expense";
-import PieChartVisual from "@/components/pie-chart";
+import ExpensePieChart from "@/components/expense-pie-chart";
+import IncomePieChart from "@/components/income-pie-chart";
 import {
   Card,
   CardContent,
@@ -21,8 +22,8 @@ export default async function Home() {
 
   const totalExpense = total - totalIncome;
   return (
-    <div className="w-full grid grid-cols-2 grid-rows-2 gap-4">
-      <Card className="col-span-2">
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-4">
+      <Card className="col-span-1 md:col-span-2">
         <CardHeader>
           <CardTitle>Total Amount</CardTitle>
           <CardDescription>Your total income and outgoings</CardDescription>
@@ -44,16 +45,28 @@ export default async function Home() {
           <CardDescription>Your total outgoing</CardDescription>
         </CardHeader>
         <CardContent className="font-semibold text-red-500">
-          £{totalExpense}
+          -£{totalExpense * -1}
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader className="mb-0 pb-0">
+          <CardTitle>Income Breakdown</CardTitle>
+          <CardDescription>Income frequency by cateogry</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <IncomePieChart
+            incomeTotal={totalIncome}
+            transactionData={transactions}
+          />
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="mb-0 pb-0">
           <CardTitle>Expense Breakdown</CardTitle>
-          <CardDescription>Expense amount by cateogry</CardDescription>
+          <CardDescription>Expense frequency by cateogry</CardDescription>
         </CardHeader>
         <CardContent>
-          <PieChartVisual
+          <ExpensePieChart
             expenseTotal={totalExpense}
             transactionData={transactions}
           />
