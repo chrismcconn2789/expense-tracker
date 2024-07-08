@@ -1,6 +1,6 @@
 import { getAllTransactions } from "@/actions/expense";
-import ExpensePieChart from "@/components/expense-pie-chart";
-import IncomePieChart from "@/components/income-pie-chart";
+import { ExpensePieChart } from "@/components/expense-pie-chart";
+import { IncomePieChart } from "@/components/income-pie-chart";
 import {
   Card,
   CardContent,
@@ -51,19 +51,19 @@ export default async function Home() {
       <Card>
         <CardHeader className="mb-0 pb-0">
           <CardTitle>Income Breakdown</CardTitle>
-          <CardDescription>Income frequency by cateogry</CardDescription>
+          <CardDescription>Income frequency by category</CardDescription>
         </CardHeader>
         <CardContent>
           <IncomePieChart
-            incomeTotal={totalIncome}
             transactionData={transactions}
+            incomeTotal={totalIncome}
           />
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="mb-0 pb-0">
           <CardTitle>Expense Breakdown</CardTitle>
-          <CardDescription>Expense frequency by cateogry</CardDescription>
+          <CardDescription>Expense frequency by category</CardDescription>
         </CardHeader>
         <CardContent>
           <ExpensePieChart
