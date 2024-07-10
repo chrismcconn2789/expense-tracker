@@ -1,6 +1,7 @@
 import { getAllTransactions } from "@/actions/expense";
 import { ExpensePieChart } from "@/components/expense-pie-chart";
 import { IncomePieChart } from "@/components/income-pie-chart";
+import TabsContainer from "@/components/tabs-container";
 import {
   Card,
   CardContent,
@@ -48,30 +49,24 @@ export default async function Home() {
           -£{totalExpense * -1}
         </CardContent>
       </Card>
-      <Card>
-        <CardHeader className="mb-0 pb-0">
-          <CardTitle>Income Breakdown</CardTitle>
-          <CardDescription>Income frequency by category</CardDescription>
-        </CardHeader>
-        <CardContent>
+      <TabsContainer
+        piechartChild={
           <IncomePieChart
             transactionData={transactions}
             incomeTotal={totalIncome}
           />
-        </CardContent>
-      </Card>
-      <Card>
-        <CardHeader className="mb-0 pb-0">
-          <CardTitle>Expense Breakdown</CardTitle>
-          <CardDescription>Expense frequency by category</CardDescription>
-        </CardHeader>
-        <CardContent>
+        }
+        barchartChild={null}
+      />
+      <TabsContainer
+        piechartChild={
           <ExpensePieChart
-            expenseTotal={totalExpense}
             transactionData={transactions}
+            expenseTotal={totalExpense}
           />
-        </CardContent>
-      </Card>
+        }
+        barchartChild={null}
+      />
     </div>
   );
 }
