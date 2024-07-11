@@ -1,6 +1,6 @@
 "use client";
 
-import { Label, Pie, PieChart } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 import {
   ChartContainer,
@@ -26,7 +26,7 @@ import {
   TableRow,
 } from "./ui/table";
 
-export function IncomePieChart({
+export function IncomeBarChart({
   transactionData,
   incomeTotal,
 }: {
@@ -44,54 +44,22 @@ export function IncomePieChart({
 
   return (
     <div>
-      <ChartContainer
-        config={chartConfig}
-        className="mx-auto aspect-square max-h-[220px]"
-      >
-        <PieChart>
+      <ChartContainer className="mt-7" config={chartConfig}>
+        <BarChart accessibilityLayer data={formattedTransactionData}>
+          <CartesianGrid vertical={false} />
+          <XAxis
+            dataKey="label"
+            tickLine={false}
+            tickMargin={10}
+            axisLine={false}
+            tickFormatter={(value) => nameFormatter(value)}
+          />
           <ChartTooltip
             cursor={false}
             content={<ChartTooltipContent hideLabel />}
           />
-          <Pie
-            data={formattedTransactionData}
-            dataKey="amount"
-            nameKey="label"
-            innerRadius={65}
-            strokeWidth={20}
-            paddingAngle={1}
-            animationDuration={1000}
-            animationBegin={0}
-          >
-            <Label
-              content={({ viewBox }) => {
-                if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                  return (
-                    <text
-                      x={viewBox.cx}
-                      y={viewBox.cy}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                    >
-                      <tspan
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        className="fill-foreground text-xl font-semibold"
-                      >
-                        £{total}
-                      </tspan>
-                      <tspan
-                        x={viewBox.cx}
-                        y={(viewBox.cy || 0) + 24}
-                        className="fill-muted-foreground"
-                      ></tspan>
-                    </text>
-                  );
-                }
-              }}
-            />
-          </Pie>
-        </PieChart>
+          <Bar dataKey="amount" name="label" strokeWidth={2} radius={8} />
+        </BarChart>
       </ChartContainer>
 
       <Table className="w-full">
@@ -116,6 +84,14 @@ export function IncomePieChart({
               </TableCell>
             </TableRow>
           ))}
+          <TableRow>
+            <TableCell
+              className="text-right font-semibold text-green-500"
+              colSpan={2}
+            >
+              £{total}
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </div>

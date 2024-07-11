@@ -60,7 +60,8 @@ export function ExpensePieChart({
             innerRadius={65}
             strokeWidth={20}
             paddingAngle={1}
-            isAnimationActive={false}
+            animationDuration={1000}
+            animationBegin={0}
           >
             <Label
               content={({ viewBox }) => {
@@ -103,14 +104,16 @@ export function ExpensePieChart({
         <TableBody>
           {formattedTransactionData.map((item, index) => (
             <TableRow key={index}>
-              <TableCell className="flex gap-2 items-center">
+              <TableCell className="flex gap-2 px-4 py-2 items-center">
                 <RxDotFilled
                   color={`${chartColors[index]}`}
                   className="scale-150"
                 />
                 {nameFormatter(item.label)}
               </TableCell>
-              <TableCell className="text-right">{item.amount}</TableCell>
+              <TableCell className="text-right px-4 py-2">
+                {item.amount}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
