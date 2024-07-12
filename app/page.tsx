@@ -1,9 +1,9 @@
 import { getAllTransactions } from "@/actions/expense";
-import { ExpenseBarChart } from "@/components/expense-bar-chart";
-import { ExpensePieChart } from "@/components/expense-pie-chart";
-import { IncomeBarChart } from "@/components/income-bar-chart";
-import { IncomePieChart } from "@/components/income-pie-chart";
-import TabsContainer from "@/components/tabs-container";
+import { ExpenseBarChart } from "@/components/charts/expense-bar-chart";
+import { ExpensePieChart } from "@/components/charts/expense-pie-chart";
+import { IncomeBarChart } from "@/components/charts/income-bar-chart";
+import { IncomePieChart } from "@/components/charts/income-pie-chart";
+import TabsContainer from "@/components/reusable/tabs-container";
 import {
   Card,
   CardContent,

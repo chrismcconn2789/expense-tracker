@@ -6,7 +6,7 @@ import {
   Table2Icon,
 } from "lucide-react";
 import Link from "next/link";
-import { ModeToggle } from "./ui/theme-switcher";
+import { ModeToggle } from "../ui/theme-switcher";
 
 export default function Header() {
   return (

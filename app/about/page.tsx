@@ -1,4 +1,4 @@
-import NeonIcon from "@/components/neon";
+import NeonIcon from "@/components/icons/neon";
 import { Card } from "@/components/ui/card";
 import { TriangleAlertIcon } from "lucide-react";
 import Link from "next/link";

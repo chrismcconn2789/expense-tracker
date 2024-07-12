@@ -14,30 +14,21 @@ import {
   formatTransactionData,
   generateChartConfig,
   getTransactionTypes,
-  nameFormatter,
 } from "@/lib/utils";
-import { RxDotFilled } from "react-icons/rx";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./ui/table";
+import DataTable from "../reusable/data-table";
 
-export function IncomePieChart({
+export function ExpensePieChart({
   transactionData,
-  incomeTotal,
+  expenseTotal,
 }: {
   transactionData: transactionType[];
-  incomeTotal: number;
+  expenseTotal: number;
 }) {
   const transactionTypes: string[] = getTransactionTypes(
     transactionData,
-    "income"
+    "expense"
   );
-  const total = incomeTotal;
+  const total = expenseTotal;
   const counts = countOccurrences(transactionTypes);
   const chartConfig = generateChartConfig(counts, chartColors);
   const formattedTransactionData = formatTransactionData(counts, chartColors);
@@ -76,9 +67,9 @@ export function IncomePieChart({
                       <tspan
                         x={viewBox.cx}
                         y={viewBox.cy}
-                        className="fill-foreground text-xl font-semibold"
+                        className="fill-foreground flex flex-col gap-2 text-xl font-semibold"
                       >
-                        £{total}
+                        -£{total * -1}
                       </tspan>
                       <tspan
                         x={viewBox.cx}
@@ -94,30 +85,7 @@ export function IncomePieChart({
         </PieChart>
       </ChartContainer>
 
-      <Table className="w-full">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Category</TableHead>
-            <TableHead className="text-right">Count</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {formattedTransactionData.map((item, index) => (
-            <TableRow key={index}>
-              <TableCell className="flex gap-2 px-4 py-2 items-center">
-                <RxDotFilled
-                  color={`${chartColors[index]}`}
-                  className="scale-150"
-                />
-                {nameFormatter(item.label)}
-              </TableCell>
-              <TableCell className="text-right px-4 py-2">
-                {item.amount}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <DataTable transactionData={formattedTransactionData} />
     </div>
   );
 }
