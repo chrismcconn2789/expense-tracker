@@ -2,7 +2,7 @@ import NeonIcon from "@/components/icons/neon";
 import { Card } from "@/components/ui/card";
 import { TriangleAlertIcon } from "lucide-react";
 import Link from "next/link";
-import { SiNextdotjs, SiPrisma, SiTailwindcss } from "react-icons/si";
+import { SiClerk, SiNextdotjs, SiPrisma, SiTailwindcss } from "react-icons/si";
 
 export default function About() {
   return (
@@ -42,6 +42,14 @@ export default function About() {
             <div className="flex items-center gap-2 text-lg font-semibold">
               <SiPrisma className="size-8" />
               Prisma
+            </div>
+          </Card>
+        </Link>
+        <Link href="https://clerk.com/" target="_blank">
+          <Card className="p-3">
+            <div className="flex items-center gap-2 text-lg font-semibold">
+              <SiClerk className="size-8 text-[#654BF6]" />
+              Clerk
             </div>
           </Card>
         </Link>

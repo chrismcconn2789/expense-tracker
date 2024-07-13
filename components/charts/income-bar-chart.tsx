@@ -20,16 +20,13 @@ import DataTable from "../reusable/data-table";
 
 export function IncomeBarChart({
   transactionData,
-  incomeTotal,
 }: {
   transactionData: transactionType[];
-  incomeTotal: number;
 }) {
   const transactionTypes: string[] = getTransactionTypes(
     transactionData,
     "income"
   );
-  const total = incomeTotal;
   const counts = countOccurrences(transactionTypes);
   const chartConfig = generateChartConfig(counts, chartColors);
   const formattedTransactionData = formatTransactionData(counts, chartColors);

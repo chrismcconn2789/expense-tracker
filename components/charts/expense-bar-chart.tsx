@@ -20,16 +20,13 @@ import DataTable from "../reusable/data-table";
 
 export function ExpenseBarChart({
   transactionData,
-  expenseTotal,
 }: {
   transactionData: transactionType[];
-  expenseTotal: number;
 }) {
   const transactionTypes: string[] = getTransactionTypes(
     transactionData,
     "expense"
   );
-  const total = expenseTotal;
   const counts = countOccurrences(transactionTypes);
   const chartConfig = generateChartConfig(counts, chartColors);
   const formattedTransactionData = formatTransactionData(counts, chartColors);

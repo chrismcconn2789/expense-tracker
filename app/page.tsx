@@ -31,7 +31,7 @@ export default async function Home() {
           <CardTitle>Total Amount</CardTitle>
           <CardDescription>Your total income and outgoings</CardDescription>
         </CardHeader>
-        <CardContent>£{total}</CardContent>
+        <CardContent>£{total.toFixed(2)}</CardContent>
       </Card>
       <Card className="col-span-1">
         <CardHeader>
@@ -39,7 +39,7 @@ export default async function Home() {
           <CardDescription>Your total income</CardDescription>
         </CardHeader>
         <CardContent className="font-semibold text-green-500">
-          £{totalIncome}
+          £{totalIncome.toFixed(2)}
         </CardContent>
       </Card>
       <Card className="col-span-1">
@@ -48,7 +48,7 @@ export default async function Home() {
           <CardDescription>Your total outgoing</CardDescription>
         </CardHeader>
         <CardContent className="font-semibold text-red-500">
-          -£{totalExpense * -1}
+          -£{(totalExpense * -1).toFixed(2)}
         </CardContent>
       </Card>
       <TabsContainer
