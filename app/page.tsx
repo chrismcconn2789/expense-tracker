@@ -11,8 +11,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { auth } from "@clerk/nextjs/server";
+import { TriangleAlertIcon } from "lucide-react";
 
 export default async function Home() {
+  const { sessionId } = auth();
   const transactions = await getAllTransactions();
   const total = transactions
     .map((transaction) => transaction.amount)
@@ -25,64 +28,70 @@ export default async function Home() {
 
   const totalExpense = total - totalIncome;
   return (
-    <div className="w-full grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-4">
-      <Card className="col-span-1 md:col-span-2">
-        <CardHeader>
-          <CardTitle>Total Amount</CardTitle>
-          <CardDescription>Your total income and outgoings</CardDescription>
-        </CardHeader>
-        <CardContent>£{total.toFixed(2)}</CardContent>
-      </Card>
-      <Card className="col-span-1">
-        <CardHeader>
-          <CardTitle>Total Income</CardTitle>
-          <CardDescription>Your total income</CardDescription>
-        </CardHeader>
-        <CardContent className="font-semibold text-green-500">
-          £{totalIncome.toFixed(2)}
-        </CardContent>
-      </Card>
-      <Card className="col-span-1">
-        <CardHeader>
-          <CardTitle>Total Outgoings</CardTitle>
-          <CardDescription>Your total outgoing</CardDescription>
-        </CardHeader>
-        <CardContent className="font-semibold text-red-500">
-          -£{(totalExpense * -1).toFixed(2)}
-        </CardContent>
-      </Card>
-      <TabsContainer
-        cardTitle="Income Breakdown"
-        cardDescription="Income frequency by category"
-        piechartChild={
-          <IncomePieChart
-            transactionData={transactions}
-            incomeTotal={totalIncome}
+    <div className="flex-1">
+      {sessionId && (
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-4">
+          <Card className="col-span-1 md:col-span-2">
+            <CardHeader>
+              <CardTitle>Total Amount</CardTitle>
+              <CardDescription>Your total income and outgoings</CardDescription>
+            </CardHeader>
+            <CardContent>£{total.toFixed(2)}</CardContent>
+          </Card>
+          <Card className="col-span-1">
+            <CardHeader>
+              <CardTitle>Total Income</CardTitle>
+              <CardDescription>Your total income</CardDescription>
+            </CardHeader>
+            <CardContent className="font-semibold text-green-500">
+              £{totalIncome.toFixed(2)}
+            </CardContent>
+          </Card>
+          <Card className="col-span-1">
+            <CardHeader>
+              <CardTitle>Total Outgoings</CardTitle>
+              <CardDescription>Your total outgoing</CardDescription>
+            </CardHeader>
+            <CardContent className="font-semibold text-red-500">
+              -£{(totalExpense * -1).toFixed(2)}
+            </CardContent>
+          </Card>
+          <TabsContainer
+            cardTitle="Income Breakdown"
+            cardDescription="Income frequency by category"
+            piechartChild={
+              <IncomePieChart
+                transactionData={transactions}
+                incomeTotal={totalIncome}
+              />
+            }
+            barchartChild={<IncomeBarChart transactionData={transactions} />}
           />
-        }
-        barchartChild={
-          <IncomeBarChart
-            transactionData={transactions}
-            incomeTotal={totalIncome}
+          <TabsContainer
+            cardTitle="Expense Breakdown"
+            cardDescription="Expense frequency by category"
+            piechartChild={
+              <ExpensePieChart
+                transactionData={transactions}
+                expenseTotal={totalExpense}
+              />
+            }
+            barchartChild={<ExpenseBarChart transactionData={transactions} />}
           />
-        }
-      />
-      <TabsContainer
-        cardTitle="Expense Breakdown"
-        cardDescription="Expense frequency by category"
-        piechartChild={
-          <ExpensePieChart
-            transactionData={transactions}
-            expenseTotal={totalExpense}
-          />
-        }
-        barchartChild={
-          <ExpenseBarChart
-            transactionData={transactions}
-            expenseTotal={totalExpense}
-          />
-        }
-      />
+        </div>
+      )}
+      {!sessionId && <NoSession />}
+    </div>
+  );
+}
+
+function NoSession() {
+  return (
+    <div className="place-self-center justify-self-center">
+      <div className="flex flex-col gap-1 items-center">
+        <TriangleAlertIcon className="text-amber-400 size-8" />
+        <span>Please sign in/sign up to use the application</span>
+      </div>
     </div>
   );
 }

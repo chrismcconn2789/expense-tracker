@@ -1,3 +1,5 @@
+import { SignOutButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import {
   InfoIcon,
   LayoutDashboardIcon,
@@ -6,9 +8,12 @@ import {
   Table2Icon,
 } from "lucide-react";
 import Link from "next/link";
+import SignInButton from "../reusable/signin-button";
+import SignUpButton from "../reusable/signup-button";
 import { ModeToggle } from "../ui/theme-switcher";
 
 export default function Header() {
+  const { sessionId } = auth();
   return (
     <div className="w-full flex flex-col gap-8">
       <div className="flex justify-between">
@@ -18,39 +23,50 @@ export default function Header() {
             <h1 className="font-bold text-2xl">Financial Analytics</h1>
           </div>
         </Link>
-        <ModeToggle />
+        <div className="flex gap-2 items-center">
+          {!sessionId && (
+            <div className="flex gap-2">
+              <SignUpButton />
+              <SignInButton />
+            </div>
+          )}
+          {sessionId && <SignOutButton />}
+          <ModeToggle />
+        </div>
       </div>
       <hr />
-      <div>
-        <nav>
-          <ul className="flex gap-2 flex-wrap">
-            <Link href={"/"}>
-              <li className="flex gap-1 border rounded-md py-1 px-3 items-center">
-                <LayoutDashboardIcon className="size-5" />
-                Dashboard
-              </li>
-            </Link>
-            <Link href={"/overview"}>
-              <li className="flex gap-1 border rounded-md py-1 px-3 items-center">
-                <Table2Icon className="size-5" />
-                Overview
-              </li>
-            </Link>
-            <Link href={"/create-expense"}>
-              <li className="flex gap-1 border rounded-md py-1 px-3 items-center">
-                <PlusIcon className="size-5" />
-                Create
-              </li>
-            </Link>
-            <Link href={"/about"}>
-              <li className="flex gap-1 border rounded-md py-1 px-3 items-center">
-                <InfoIcon className="size-5" />
-                About
-              </li>
-            </Link>
-          </ul>
-        </nav>
-      </div>
+      {sessionId && (
+        <div>
+          <nav>
+            <ul className="flex gap-2 flex-wrap">
+              <Link href={"/"}>
+                <li className="flex gap-1 border rounded-md py-1 px-3 items-center">
+                  <LayoutDashboardIcon className="size-5" />
+                  Dashboard
+                </li>
+              </Link>
+              <Link href={"/overview"}>
+                <li className="flex gap-1 border rounded-md py-1 px-3 items-center">
+                  <Table2Icon className="size-5" />
+                  Overview
+                </li>
+              </Link>
+              <Link href={"/create-expense"}>
+                <li className="flex gap-1 border rounded-md py-1 px-3 items-center">
+                  <PlusIcon className="size-5" />
+                  Create
+                </li>
+              </Link>
+              <Link href={"/about"}>
+                <li className="flex gap-1 border rounded-md py-1 px-3 items-center">
+                  <InfoIcon className="size-5" />
+                  About
+                </li>
+              </Link>
+            </ul>
+          </nav>
+        </div>
+      )}
     </div>
   );
 }
