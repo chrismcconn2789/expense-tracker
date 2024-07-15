@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           >
             <main className="flex flex-grow max-w-4xl m-auto min-h-screen flex-col items-center gap-8 p-8">
               <Header />
-              <div className="flex-1 w-full">{children}</div>
+              <div className="flex flex-1 w-full">{children}</div>
               <Footer />
             </main>
           </ThemeProvider>

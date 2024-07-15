@@ -7,8 +7,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 export default async function Overview() {
+  const { userId } = auth();
+  if (!userId) {
+    redirect("sign-in");
+  }
   const transactions = await getAllTransactions();
   const formatCategory = (name: string): string => {
     return (

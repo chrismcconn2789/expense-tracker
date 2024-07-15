@@ -12,7 +12,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { auth } from "@clerk/nextjs/server";
-import { TriangleAlertIcon } from "lucide-react";
 
 export default async function Home() {
   const { sessionId } = auth();
@@ -28,8 +27,8 @@ export default async function Home() {
 
   const totalExpense = total - totalIncome;
   return (
-    <div className="flex-1">
-      {sessionId && (
+    <div className="flex justify-center w-full">
+      {sessionId ? (
         <div className="w-full grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-4">
           <Card className="col-span-1 md:col-span-2">
             <CardHeader>
@@ -79,19 +78,17 @@ export default async function Home() {
             barchartChild={<ExpenseBarChart transactionData={transactions} />}
           />
         </div>
+      ) : (
+        <NoSession />
       )}
-      {!sessionId && <NoSession />}
     </div>
   );
 }
 
 function NoSession() {
   return (
-    <div className="place-self-center justify-self-center">
-      <div className="flex flex-col gap-1 items-center">
-        <TriangleAlertIcon className="text-amber-400 size-8" />
-        <span>Please sign in/sign up to use the application</span>
-      </div>
+    <div className="flex items-center text-center">
+      <p className="text-lg font-semibold">Please Login or Register</p>
     </div>
   );
 }

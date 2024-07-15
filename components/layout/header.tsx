@@ -1,4 +1,4 @@
-import { SignOutButton } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import {
   InfoIcon,
@@ -8,12 +8,11 @@ import {
   Table2Icon,
 } from "lucide-react";
 import Link from "next/link";
-import SignInButton from "../reusable/signin-button";
-import SignUpButton from "../reusable/signup-button";
+import { Button } from "../ui/button";
 import { ModeToggle } from "../ui/theme-switcher";
 
 export default function Header() {
-  const { sessionId } = auth();
+  const { userId } = auth();
   return (
     <div className="w-full flex flex-col gap-8">
       <div className="flex justify-between">
@@ -24,18 +23,35 @@ export default function Header() {
           </div>
         </Link>
         <div className="flex gap-2 items-center">
-          {!sessionId && (
+          {!userId && (
             <div className="flex gap-2">
-              <SignUpButton />
-              <SignInButton />
+              <SignInButton>
+                <Button variant="default">Login</Button>
+              </SignInButton>
+              <SignUpButton>
+                <Button variant="outline">Register</Button>
+              </SignUpButton>
             </div>
           )}
-          {sessionId && <SignOutButton />}
+          {userId && (
+            <div className="flex gap-2">
+              <UserButton
+                showName={true}
+                appearance={{
+                  elements: {
+                    userButtonBox:
+                      "dark:text-white border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 rounded-md",
+                    userButtonAvatarBox: "hidden",
+                  },
+                }}
+              />
+            </div>
+          )}
           <ModeToggle />
         </div>
       </div>
       <hr />
-      {sessionId && (
+      {userId && (
         <div>
           <nav>
             <ul className="flex gap-2 flex-wrap">
