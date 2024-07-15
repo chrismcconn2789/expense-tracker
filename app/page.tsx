@@ -88,7 +88,7 @@ export default async function Home() {
 function NoSession() {
   return (
     <div className="flex items-center text-center">
-      <p className="text-lg font-semibold">Please Login or Register</p>
+      <p className="text-basefont-semibold">Please Login or Register</p>
     </div>
   );
 }

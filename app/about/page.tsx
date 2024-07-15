@@ -1,10 +1,16 @@
 import NeonIcon from "@/components/icons/neon";
 import { Card } from "@/components/ui/card";
+import { auth } from "@clerk/nextjs/server";
 import { TriangleAlertIcon } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { SiClerk, SiNextdotjs, SiPrisma, SiTailwindcss } from "react-icons/si";
 
 export default function About() {
+  const { userId } = auth();
+  if (!userId) {
+    redirect("/");
+  }
   return (
     <div className="flex flex-col gap-4">
       <div className="w-full flex justify-center">

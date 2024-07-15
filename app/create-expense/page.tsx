@@ -13,10 +13,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { expenseCategories, incomeCategories } from "@/lib/models";
+import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export default async function CreateExpense() {
+  const { userId } = auth();
+  if (!userId) {
+    redirect("/");
+  }
   const createTransaction = async (formData: FormData) => {
     "use server";
     const title = formData.get("title") as string;

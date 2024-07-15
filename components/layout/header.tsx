@@ -8,6 +8,7 @@ import {
   Table2Icon,
 } from "lucide-react";
 import Link from "next/link";
+import { RxLockClosed, RxPerson } from "react-icons/rx";
 import { Button } from "../ui/button";
 import { ModeToggle } from "../ui/theme-switcher";
 
@@ -26,10 +27,15 @@ export default function Header() {
           {!userId && (
             <div className="flex gap-2">
               <SignInButton>
-                <Button variant="default">Login</Button>
+                <Button variant="outline" className="flex gap-1">
+                  <RxLockClosed className="size-5" />
+                  Login
+                </Button>
               </SignInButton>
               <SignUpButton>
-                <Button variant="outline">Register</Button>
+                <Button variant="outline" className="flex gap-1">
+                  <RxPerson className="size-5" /> Register
+                </Button>
               </SignUpButton>
             </div>
           )}
