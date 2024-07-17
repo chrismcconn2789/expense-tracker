@@ -2,14 +2,19 @@
 
 import prisma from "../lib/prisma";
 
-export const getAllTransactions = async () => {
-  return await prisma.expense.findMany();
+export const getAllTransactions = async (userId: string) => {
+  return await prisma.expense.findMany({
+    where: {
+      clerkUserId: userId,
+    },
+  });
 };
 
 export const addTransaction = async (
   title: string,
   amount: number,
-  category: string
+  category: string,
+  clerkUserId: string
 ) => {
   const type = category.split("-")[0] === "income" ? "Income" : "Expense";
   let formattedAmount =
@@ -18,9 +23,9 @@ export const addTransaction = async (
     data: {
       title,
       amount: formattedAmount,
-      userId: 1,
       category,
       type,
+      clerkUserId,
     },
   });
 };

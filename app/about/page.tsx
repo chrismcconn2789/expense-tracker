@@ -12,7 +12,7 @@ export default function About() {
     redirect("/");
   }
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 justify-around">
       <div className="w-full flex justify-center">
         <Card className="flex gap-1 items-center p-2 border-red-500 w-fit">
           <TriangleAlertIcon className="text-red-500 size-6" />
@@ -22,10 +22,13 @@ export default function About() {
           </span>
         </Card>
       </div>
-      <div>
-        This is a demo application built using Next.js, server actions, Primsa
-        ORM, and Neon Postgres Database
-      </div>
+      <p className="mx-8 text-balance text-center">
+        This is a demo application built using Next.js with the latest server
+        actions. It uses Primsa ORM and Neon Postgres Database for persistent
+        storage. Clerk for authorization and Tailwind CSS with components from
+        shadcn/ui for styling.
+      </p>
+      <p className="mx-8 text-center">Click on the icons below to learn more</p>
       <div className="flex gap-4 self-center">
         <Link href="https://nextjs.org/" target="_blank">
           <Card className="p-3">
@@ -35,19 +38,19 @@ export default function About() {
             </div>
           </Card>
         </Link>
-        <Link href="https://neon.tech" target="_blank">
-          <Card className="p-3">
-            <div className="flex items-center gap-2 text-lg font-semibold">
-              <NeonIcon />
-              Neon
-            </div>
-          </Card>
-        </Link>
         <Link href="https://www.prisma.io/" target="_blank">
           <Card className="p-3">
             <div className="flex items-center gap-2 text-lg font-semibold">
               <SiPrisma className="size-8" />
               Prisma
+            </div>
+          </Card>
+        </Link>
+        <Link href="https://neon.tech" target="_blank">
+          <Card className="p-3">
+            <div className="flex items-center gap-2 text-lg font-semibold">
+              <NeonIcon />
+              Neon
             </div>
           </Card>
         </Link>
@@ -63,7 +66,7 @@ export default function About() {
           <Card className="p-3">
             <div className="flex items-center gap-2 text-lg font-semibold">
               <SiTailwindcss className="size-8 text-[#38BDF9]" />
-              Tailwind CSS
+              Tailwind
             </div>
           </Card>
         </Link>

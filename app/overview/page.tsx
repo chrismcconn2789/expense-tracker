@@ -10,12 +10,14 @@ import {
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
+export const dynamic = "auto";
+
 export default async function Overview() {
   const { userId } = auth();
   if (!userId) {
     redirect("sign-in");
   }
-  const transactions = await getAllTransactions();
+  const transactions = await getAllTransactions(userId);
   const formatCategory = (name: string): string => {
     return (
       name.split("-")[1].charAt(0).toUpperCase() + name.split("-")[1].slice(1)

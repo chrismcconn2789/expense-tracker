@@ -14,8 +14,9 @@ import {
 import { auth } from "@clerk/nextjs/server";
 
 export default async function Home() {
-  const { sessionId } = auth();
-  const transactions = await getAllTransactions();
+  const { userId } = auth();
+
+  const transactions = userId ? await getAllTransactions(userId) : [];
   const total = transactions
     .map((transaction) => transaction.amount)
     .reduce((sum, acc) => sum + acc, 0);
@@ -28,7 +29,7 @@ export default async function Home() {
   const totalExpense = total - totalIncome;
   return (
     <div className="flex justify-center w-full">
-      {sessionId ? (
+      {userId ? (
         <div className="w-full grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-4">
           <Card className="col-span-1 md:col-span-2">
             <CardHeader>
@@ -55,28 +56,36 @@ export default async function Home() {
               -£{(totalExpense * -1).toFixed(2)}
             </CardContent>
           </Card>
-          <TabsContainer
-            cardTitle="Income Breakdown"
-            cardDescription="Income frequency by category"
-            piechartChild={
-              <IncomePieChart
-                transactionData={transactions}
-                incomeTotal={totalIncome}
+          {transactions.length > 0 && (
+            <>
+              <TabsContainer
+                cardTitle="Income Breakdown"
+                cardDescription="Income frequency by category"
+                piechartChild={
+                  <IncomePieChart
+                    transactionData={transactions}
+                    incomeTotal={totalIncome}
+                  />
+                }
+                barchartChild={
+                  <IncomeBarChart transactionData={transactions} />
+                }
               />
-            }
-            barchartChild={<IncomeBarChart transactionData={transactions} />}
-          />
-          <TabsContainer
-            cardTitle="Expense Breakdown"
-            cardDescription="Expense frequency by category"
-            piechartChild={
-              <ExpensePieChart
-                transactionData={transactions}
-                expenseTotal={totalExpense}
+              <TabsContainer
+                cardTitle="Expense Breakdown"
+                cardDescription="Expense frequency by category"
+                piechartChild={
+                  <ExpensePieChart
+                    transactionData={transactions}
+                    expenseTotal={totalExpense}
+                  />
+                }
+                barchartChild={
+                  <ExpenseBarChart transactionData={transactions} />
+                }
               />
-            }
-            barchartChild={<ExpenseBarChart transactionData={transactions} />}
-          />
+            </>
+          )}
         </div>
       ) : (
         <NoSession />

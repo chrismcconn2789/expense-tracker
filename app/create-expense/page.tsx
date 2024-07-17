@@ -30,7 +30,7 @@ export default async function CreateExpense() {
     if (!title || !amount || !category) {
       return;
     }
-    addTransaction(title, +amount, category);
+    addTransaction(title, +amount, category, userId);
     revalidatePath("/overview");
     revalidatePath("/");
     redirect("/overview");
