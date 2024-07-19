@@ -30,7 +30,13 @@ export default async function CreateExpense() {
     if (!title || !amount || !category) {
       return;
     }
-    addTransaction(title, +amount, category, userId);
+    const amountToNumber = Number(amount);
+    await addTransaction({
+      title,
+      amount: amountToNumber,
+      category,
+      clerkUserId: userId,
+    });
     revalidatePath("/overview");
     revalidatePath("/");
     redirect("/overview");
@@ -70,7 +76,7 @@ export default async function CreateExpense() {
                     <SelectLabel>Income</SelectLabel>
                     {incomeCategories.map((category) => {
                       return (
-                        <SelectItem value={category.value}>
+                        <SelectItem key={category.value} value={category.value}>
                           {category.name}
                         </SelectItem>
                       );
@@ -78,7 +84,7 @@ export default async function CreateExpense() {
                     <SelectLabel>Expense</SelectLabel>
                     {expenseCategories.map((category) => {
                       return (
-                        <SelectItem value={category.value}>
+                        <SelectItem key={category.value} value={category.value}>
                           {category.name}
                         </SelectItem>
                       );
